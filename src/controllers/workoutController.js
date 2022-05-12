@@ -34,6 +34,14 @@ const createNewWorkout = (req, res) => {
         !body.exercises ||
         !body.trainerTips
     ) {
+        res
+        .status(400)
+        .send({
+            status: "FAILED",
+            data: {
+                error: "One of the following keys is missing or empty in request body: 'name', 'mode', 'equipment', 'exercises', 'trainerTips'",
+            },
+        });
         return;
     }
 
@@ -79,7 +87,7 @@ const deleteOneWorkout = (req, res) => {
     }
 
     workoutService.deleteOneWorkout(workoutId);
-    res.status(204).send({
+    res.status(200).send({
         status: "OK",
         message: "workout deleted"
     });
